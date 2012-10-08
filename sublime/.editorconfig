@@ -1,0 +1,17 @@
+root = true
+
+[*]
+indent_style = tab
+indent_size = 2
+; end_of_line = system
+
+[*.yml]
+indent_style = space
+
+[*.erb.html]
+
+[*.rb]
+; indent_style = space
+
+[*.js]
+; indent_style = space
