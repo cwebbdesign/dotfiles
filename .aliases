@@ -6,7 +6,6 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 
 # Frequently used commands and directories
-alias demo="cd ~/funda/dem-trunk"
 alias m="middleman"
 alias m2="middleman -p 2020"
 
