@@ -56,6 +56,7 @@ When setting up a new Mac, this sets some basic defaults:
 
 #### shell environement
 * `.aliases`
+* `.bash_login`
 * `.bash_profile`
 * `.bash_prompt`
 * `.bashrc`
