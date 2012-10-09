@@ -8,6 +8,7 @@ alias -- -="cd -"
 # Frequently used commands and directories
 alias m="middleman"
 alias m2="middleman -p 2020"
+alias l='ls -laAhG' # Long and detailed listing
 
 # programs
 # sublime text symlink
