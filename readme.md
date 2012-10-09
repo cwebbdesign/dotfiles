@@ -84,4 +84,5 @@ When setting up a new Mac, this sets some basic defaults:
 git clone https://github.com/cwebbdesign/dotfiles.git && cd dotfiles && ./sync.sh
 ```
 
+
 To update later on, just run the sync again.
