@@ -6,8 +6,10 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 
 # Frequently used commands and directories
-alias m="middleman"
-alias m2="middleman -p 2020"
+alias m='middleman'
+alias m2='middleman -p 2020'
+alias tm='TEST=TRUE middleman'
+alias tm2='TEST=TRUE middleman -p 2020'
 alias l='ls -laAhG' # Long and detailed listing
 
 # programs
@@ -24,11 +26,16 @@ alias opera="open -a opera"
 alias chrome="open -a google\ chrome"
 alias f='open -a Finder'
 alias photoshop="open -a '/Applications/Adobe Photoshop CS5.1/Adobe Photoshop CS5.1.app'"
+alias chromium="DART_FLAGS='--enable_type_checks --enable_asserts' open -a '/Applications/chromium/Chromium.app/Contents/MacOS/Chromium'"
+alias tb="open -a tweetbot.app"
 
 # general shortcuts
 alias pro="cd ~/projects"
 alias gh="open -a google\ chrome 'http://github.com/cwebbdesign'"
 alias bl="open -a google\ chrome 'http://browserling.com'"
+alias rss="open -a google\ chrome 'http://www.google.com/reader'"
+alias gv="open -a google\ chrome 'http://translate.google.nl/'"
+
 
 # handy things
 alias bunyip='node ~/code/bunyip/cli.js'

@@ -1,7 +1,7 @@
-
 # @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
 # Shamelessly copied from https://github.com/gf3/dotfiles
-
+# Using Nicolas Gallagher's version of the Solarized color scheme https://github.com/necolas/dotfiles
+# Color ref: http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
 # default_username='chris'
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
@@ -18,6 +18,17 @@ if tput setaf 1 &> /dev/null; then
 		GREEN=$(tput setaf 190)
 		PURPLE=$(tput setaf 141)
 		WHITE=$(tput setaf 256)
+
+		# optional solar color scheme
+		SOLAR_YELLOW=$(tput setaf 136)
+		SOLAR_ORANGE=$(tput setaf 166)
+		SOLAR_RED=$(tput setaf 124)
+		SOLAR_MAGENTA=$(tput setaf 125)
+		SOLAR_VIOLET=$(tput setaf 61)
+		SOLAR_BLUE=$(tput setaf 33)
+		SOLAR_CYAN=$(tput setaf 37)
+		SOLAR_GREEN=$(tput setaf 64)
+		SOLAR_WHITE=$(tput setaf 254)
 	else
 		MAGENTA=$(tput setaf 5)
 		ORANGE=$(tput setaf 4)
@@ -57,4 +68,8 @@ function parse_git_branch() {
 # in the iterm tab
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
-PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+# Sexy bash prompt
+# PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+
+# Solarized prompt
+PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${SOLAR_MAGENTA}\]\u \[$SOLAR_WHITE\]at \[$SOLAR_ORANGE\]\h \[$SOLAR_WHITE\]in \[$SOLAR_GREEN\]\w\[$SOLAR_WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$SOLAR_VIOLET\]\$(parse_git_branch)\[$SOLAR_WHITE\]\n\$ \[$RESET\]"
