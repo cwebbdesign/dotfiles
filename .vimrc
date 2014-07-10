@@ -72,10 +72,3 @@ function! StripWhitespace ()
 	call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
-
-call pathogen#infect()
-syntax enable
-set background=dark
-  " set background=light
-	" let g:solarized_termcolors=256
-colorscheme solarized

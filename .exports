@@ -1,9 +1,12 @@
-# Default editor
+# Make vim the default editor
 export EDITOR="vim"
 # export EDITOR='subl -w'
-# Larger bash history (allow 32³ entries; default is 500)
+# Don't clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Larger bash history (allow 32¬≥ entries; default is 500)
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
 # Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"

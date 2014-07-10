@@ -18,7 +18,7 @@ Toss it into a file called `.extra` which you do not commit to this repo and jus
 
 ## Syntax highlighting
 
-…is really important. even for these files.
+‚Ä¶is really important. even for these files.
 
 add the below to this file: `~/Library/Application Support/Sublime Text 2/Packages/ShellScript/Shell-Unix-Generic.tmLanguage`
 

@@ -25,3 +25,10 @@ export LANG="en_US"
 # Add tab completion for `defaults read|write NSGlobalDomain`
 # You could just use `-g` instead, but I like being explicit
 # complete -W "NSGlobalDomain" defaults
+
+
+# [[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh # This loads NVM
+
+
+# Add other folders to the path
+# PATH=/usr/local/packer

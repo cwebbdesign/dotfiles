@@ -6,15 +6,17 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 
 # Frequently used commands and directories
-alias m='middleman'
-alias m2='middleman -p 2020'
-alias tm='TEST=TRUE middleman'
-alias tm2='TEST=TRUE middleman -p 2020'
+alias m="bundle exec middleman"
+alias m2="bundle exec middleman -p 2020"
 alias l='ls -laAhG' # Long and detailed listing
+alias server='python -m SimpleHTTPServer'
+alias fwatcher='nodemon -e js,css,html,erb'
+
 
 # programs
 # sublime text symlink
 # ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl
+alias an="perl texapp/texapp"
 alias preview="open -a '$PREVIEW'"
 alias xcode="open -a '/Developer/Applications/Xcode.app'"
 # alias filemerge="open -a '/Developer/Applications/Utilities/FileMerge.app'"
@@ -32,10 +34,6 @@ alias tb="open -a tweetbot.app"
 # general shortcuts
 alias pro="cd ~/projects"
 alias gh="open -a google\ chrome 'http://github.com/cwebbdesign'"
-alias bl="open -a google\ chrome 'http://browserling.com'"
-alias rss="open -a google\ chrome 'http://www.google.com/reader'"
-alias gv="open -a google\ chrome 'http://translate.google.nl/'"
-
 
 # handy things
 alias bunyip='node ~/code/bunyip/cli.js'
