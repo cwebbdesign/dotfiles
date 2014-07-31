@@ -3,7 +3,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias -- -="cd -"
+alias --="cd -"
 
 # Frequently used commands and directories
 alias m="bundle exec middleman"
@@ -65,15 +65,11 @@ else
 fi
 
 # `cat` with beautiful colors. requires Pygments installed.
-# 							   sudo easy_install Pygments
+# sudo easy_install Pygments
 alias c='pygmentize -O style=monokai -f console256 -g'
 
-# GIT STUFF
-# Undo a `git push`
-alias undopush="git push -f origin HEAD^:master"
-# Ammend git commit message before push
-alias ammend="git commit --amend"
-# git root
+
+# Move to Root of git directory
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 
 # IP addresses

@@ -1,7 +1,6 @@
-# [user]
-#	name =
-#	email =
-
+[user]
+	# name =
+	# email =
 [alias]
 	c = commit -am
 	up = pull
@@ -9,6 +8,16 @@
 	s = status -s
 	df = diff --color --color-words --abbrev
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	undopush = !git push -f origin HEAD^:master
+	# the following alias come from http://haacked.com/archive/2014/07/28/github-flow-aliases/
+  up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+  cob = checkout -b
+  cm = !git add -A && git commit -m
+  save = !git add -A && git commit -m 'SAVEPOINT'
+  wip = !git add -u && git commit -m "WIP"
+  undo = reset HEAD~1 --mixed
+  amend = commit -a --amend
+  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 [color]
 	ui = always
 [apply]
