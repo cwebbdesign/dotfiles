@@ -11,6 +11,9 @@ unset file
 # init rvm - critical with bash_profile
 source ~/.rvm/scripts/rvm
 
+# Git autocomplete
+# curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -OL
+source ~/git-completion.bash
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -27,7 +30,7 @@ export LANG="en_US"
 # complete -W "NSGlobalDomain" defaults
 
 
-# [[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh # This loads NVM
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh # This loads NVM
 
 
 # Add other folders to the path

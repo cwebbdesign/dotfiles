@@ -11,7 +11,7 @@ alias m2="bundle exec middleman -p 2020"
 alias l='ls -laAhG' # Long and detailed listing
 alias server='python -m SimpleHTTPServer'
 alias fwatcher='nodemon -e js,css,html,erb'
-
+alias cdng="cd /usr/local/etc/nginx"
 
 # programs
 # sublime text symlink
