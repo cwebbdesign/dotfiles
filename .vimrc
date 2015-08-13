@@ -16,8 +16,11 @@ Plugin 'scrooloose/nerdtree'          "File Navigation
 Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'               "Fuzzy Navigation, thank God
 Plugin 'scrooloose/syntastic'         "Linting
-Plugin 'vim-scripts/vcscommand.vim'       "Git diff
-"Plugin 'mxw/vim-jsx'                  "JSX highlighting
+Plugin 'vim-scripts/vcscommand.vim'   "Git diff
+Plugin 'fholgado/minibufexpl.vim'     "Buffer Explorer
+Plugin 'guns/vim-clojure-static'      "Clojure
+Plugin 'tpope/vim-fireplace'
+"Plugin 'mxw/vim-jsx'                 "JSX highlighting
 "Bundle 'rstacruz/sparkup'            "Fast html generation
 
 " All of your Plugins must be added before the following line
@@ -75,6 +78,25 @@ let g:solarized_termcolors=16
 " let g:solarized_termtrans = 1
 let w:solarized_style = "dark"
 colorscheme solarized
+
+
+" Toggle solarized background
+ function! ToggleBackground()
+     if (w:solarized_style=="dark")
+     let w:solarized_style="light"
+     set background=light
+     colorscheme solarized
+ else
+     let w:solarized_style="dark"
+     set background=dark
+     colorscheme solarized
+ endif
+ endfunction
+ command! Togbg call ToggleBackground()
+" nnoremap <F5> :call ToggleBackground()<CR>
+" inoremap <F5> <ESC>:call ToggleBackground()<CR>a
+" vnoremap <F5> <ESC>:call ToggleBackground()<CR>
+"
 
 " Highlight current line
 set cursorline
@@ -184,21 +206,15 @@ if has('persistent_undo')
 endif
 " }}}
 
-" Toggle solarized background
-function! ToggleBackground()
-    if (w:solarized_style=="dark")
-    let w:solarized_style="light"
-    colorscheme solarized
-else
-    let w:solarized_style="dark"
-    colorscheme solarized
-endif
-endfunction
-command! Togbg call ToggleBackground()
-nnoremap <F5> :call ToggleBackground()<CR>
-inoremap <F5> <ESC>:call ToggleBackground()<CR>a
-vnoremap <F5> <ESC>:call ToggleBackground()<CR>
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
 
+command! Toglines call NumberToggle()
 
 " Give a shortcut key to NERD Tree
 map <F2> :NERDTreeToggle<CR>
@@ -213,8 +229,8 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|sass)$'
 "  \ 'link': 'some_bad_symbolic_links',
 "  \ }
 " Syntastic Options
-let g:syntastic_javascript_checkers=['jsxhint']
-let g:syntastic_javascript_jsxhint_exec='jsx-jshint-wrapper'
+let g:syntastic_javascript_checkers=['eslint']
+"let g:syntastic_javascript_jsxhint_exec='jsx-jshint-wrapper'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
