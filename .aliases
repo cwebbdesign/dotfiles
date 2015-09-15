@@ -12,7 +12,8 @@ alias l='ls -laAhG' # Long and detailed listing
 alias server='python -m SimpleHTTPServer'
 alias fwatcher='nodemon -e js,css,html,erb'
 alias cdng="cd /usr/local/etc/nginx"
-
+alias k="sudo kill -9"
+alias l="lsof -i -n -P | grep"
 # programs
 # sublime text symlink
 # ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl

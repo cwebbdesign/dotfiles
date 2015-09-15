@@ -12,10 +12,11 @@ function marks {
     \ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
 }
 function fp {
-        ps aux | grep "$@"
+	ps aux | grep "$@"
 }
-function terminate {
-  lsof -P | grep ':3$@' | awk '{print $2}' | xargs kill -9
+
+function ep {
+  lsof -n -i:$@ | grep LISTEN | awk '{ print $2 }' | uniq | xargs kill -9
 }
 # Quickly get image dimensions from the command line
 # run imgsize /path/to/image.jpg and get back 600 x 343.
