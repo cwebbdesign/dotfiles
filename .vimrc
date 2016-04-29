@@ -18,10 +18,24 @@ Plugin 'kien/ctrlp.vim'               "Fuzzy Navigation, thank God
 Plugin 'scrooloose/syntastic'         "Linting
 Plugin 'vim-scripts/vcscommand.vim'   "Git diff
 Plugin 'fholgado/minibufexpl.vim'     "Buffer Explorer
-Plugin 'guns/vim-clojure-static'      "Clojure
-Plugin 'tpope/vim-fireplace'
+Plugin 'epeli/slimux'                 "Tmux support
+Plugin 'christoomey/vim-tmux-navigator' "Use same vim/tmux pane hotkeys
 "Plugin 'mxw/vim-jsx'                 "JSX highlighting
 "Bundle 'rstacruz/sparkup'            "Fast html generation
+
+"Clojure
+Plugin 'guns/vim-clojure-static', { 'for': 'clojure' }      "Clojure
+Plugin 'tpope/vim-fireplace',     { 'for': 'clojure' }
+Plugin 'vim-scripts/paredit.vim', { 'for': 'clojure' }      "Parenthesis
+
+"Markdown
+"http://www.nickcoding.com/2012/02/03/vim-and-markdown-editing/
+Plugin 'tpope/vim-markdown'
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd Filetype markdown setlocal wrap
+autocmd Filetype markdown setlocal linebreak
+autocmd Filetype markdown setlocal nolist
+autocmd Filetype markdown setlocal columns=80
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -222,7 +236,7 @@ map <F2> :NERDTreeToggle<CR>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 " set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|sass)$'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|sass|node_modules)$'
 "let g:ctrlp_custom_ignore = {
 "  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
 "  \ 'file': '\v\.(exe|so|dll)$',

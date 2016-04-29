@@ -13,7 +13,9 @@ alias server='python -m SimpleHTTPServer'
 alias fwatcher='nodemon -e js,css,html,erb'
 alias cdng="cd /usr/local/etc/nginx"
 alias k="sudo kill -9"
-alias l="lsof -i -n -P | grep"
+alias l="lsof -i -n -P | grep "
+alias startphp='launchctl load $HOME/Library/LaunchAgents/homebrew.mxcl.php55.plist'
+alias killphp='launchctl unload $HOME/Library/LaunchAgents/homebrew.mxcl.php55.plist'
 # programs
 # sublime text symlink
 # ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl
@@ -31,7 +33,7 @@ alias f='open -a Finder'
 alias photoshop="open -a '/Applications/Adobe Photoshop CS5.1/Adobe Photoshop CS5.1.app'"
 alias chromium="DART_FLAGS='--enable_type_checks --enable_asserts' open -a '/Applications/chromium/Chromium.app/Contents/MacOS/Chromium'"
 alias tb="open -a tweetbot.app"
-
+alias emacs="/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs -nw"
 # general shortcuts
 alias pro="cd ~/projects"
 alias gh="open -a google\ chrome 'http://github.com/cwebbdesign'"
