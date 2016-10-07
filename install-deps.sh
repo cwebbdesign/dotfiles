@@ -13,9 +13,12 @@ curl -L https://get.rvm.io | bash -s stable --ruby
 # TODO: I think i'd rather curl down the nave.sh, symlink it into /bin and use that for initial node install.
 npm install -g nave
 
+#NVM
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
+
 # homebrew!
 # you need the code CLI tools YOU FOOL.
-ruby <(curl -fsSkL raw.github.com/mxcl/homebrew/go)
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # https://github.com/rupa/z
 mkdir -p ~/code/z
@@ -25,18 +28,8 @@ chmod +x ~/code/z/z.sh
 # add this to the bash_profile file if it aint there.
 #   . ~/code/z/z.sh
 
-cd ~/code
-git clone git://github.com/dronir/SpotifyControl.git
-
-# add DropBox uploader
-git clone git://github.com/andreafabrizi/Dropbox-Uploader.git
-
-# Install pathogen
-# windows change /.vim to \vimfiles
-# https://github.com/tpope/vim-pathogen
-mkdir -p ~/.vim/autoload ~/.vim/bundle;
-curl -Sso ~/.vim/autoload/pathogen.vim \
-    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+# vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Solarized vim
 cd ~/.vim/bundle

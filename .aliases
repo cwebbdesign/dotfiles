@@ -6,8 +6,6 @@ alias .....="cd ../../../.."
 #alias --="cd -"
 
 # Frequently used commands and directories
-alias m="bundle exec middleman"
-alias m2="bundle exec middleman -p 2020"
 alias l='ls -laAhG' # Long and detailed listing
 alias server='python -m SimpleHTTPServer'
 alias fwatcher='nodemon -e js,css,html,erb'
@@ -16,32 +14,24 @@ alias k="sudo kill -9"
 alias l="lsof -i -n -P | grep "
 alias startphp='launchctl load $HOME/Library/LaunchAgents/homebrew.mxcl.php55.plist'
 alias killphp='launchctl unload $HOME/Library/LaunchAgents/homebrew.mxcl.php55.plist'
+
 # programs
 # sublime text symlink
 # ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl
-alias an="perl texapp/texapp"
+
 alias preview="open -a '$PREVIEW'"
 alias xcode="open -a '/Developer/Applications/Xcode.app'"
-# alias filemerge="open -a '/Developer/Applications/Utilities/FileMerge.app'"
-alias difmerge="open -a '/Applications/FileMerge.app'"
-alias cstone="open -a cornerstone"
-alias safari="open -a safari"
-alias firefox="open -a firefox"
-alias opera="open -a opera"
 alias chrome="open -a google\ chrome"
 alias f='open -a Finder'
-alias photoshop="open -a '/Applications/Adobe Photoshop CS5.1/Adobe Photoshop CS5.1.app'"
 alias chromium="DART_FLAGS='--enable_type_checks --enable_asserts' open -a '/Applications/chromium/Chromium.app/Contents/MacOS/Chromium'"
-alias tb="open -a tweetbot.app"
 alias emacs="/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs -nw"
+
 # general shortcuts
-alias pro="cd ~/projects"
 alias gh="open -a google\ chrome 'http://github.com/cwebbdesign'"
 
 # handy things
 alias bunyip='node ~/code/bunyip/cli.js'
 alias spotify="osascript ~/code/SpotifyControl/SpotifyControl.scpt"
-
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -126,16 +116,31 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 
 # update dotfiles
 alias updatedotfiles="~/code/dotfiles/sync.sh"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
 # Show/hide hidden files in Finder
-alias show="defaults write com.apple.Finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.Finder AppleShowAllFiles -bool false && killall Finder"
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
 # Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
 # Run DropboxUploader if you have it installed
-alias dropbox="~/code/Dropbox-Uploader/dropbox_uploader.sh $1"
+# alias dropbox="~/code/Dropbox-Uploader/dropbox_uploader.sh $1"
 
 # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
 alias plistbuddy="/usr/libexec/PlistBuddy"

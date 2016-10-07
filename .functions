@@ -87,6 +87,58 @@ cp_p () {
 }
 
 
+# Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
+function targz() {
+        local tmpFile="${@%/}.tar";
+        tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
+
+        size=$(
+                stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
+                stat -c"%s" "${tmpFile}" 2> /dev/null;  # GNU `stat`
+        );
+
+        local cmd="";
+        if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
+                # the .tar file is smaller than 50 MB and Zopfli is available; use it
+                cmd="zopfli";
+        else
+                if hash pigz 2> /dev/null; then
+                        cmd="pigz";
+                else
+                        cmd="gzip";
+                fi;
+        fi;
+
+        echo "Compressing .tar ($((size / 1000)) kB) using \`${cmd}\`…";
+        "${cmd}" -v "${tmpFile}" || return 1;
+        [ -f "${tmpFile}" ] && rm "${tmpFile}";
+
+        zippedSize=$(
+                stat -f"%z" "${tmpFile}.gz" 2> /dev/null; # OS X `stat`
+                stat -c"%s" "${tmpFile}.gz" 2> /dev/null; # GNU `stat`
+        );
+
+        echo "${tmpFile}.gz ($((zippedSize / 1000)) kB) created successfully.";
+}
+
+# Use Git’s colored diff when available
+hash git &>/dev/null;
+if [ $? -eq 0 ]; then
+        function diff() {
+                git diff --no-index --color-words "$@";
+        }
+fi;
+
+# Create a data URL from a file
+function dataurl() {
+        local mimeType=$(file -b --mime-type "$1");
+        if [[ $mimeType == text/* ]]; then
+                mimeType="${mimeType};charset=utf-8";
+        fi
+        echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
+}
+
+
 # Test if HTTP compression (RFC 2616 + SDCH) is enabled for a given URL.
 # Send a fake UA string for sites that sniff it instead of using the Accept-Encoding header. (Looking at you, ajax.googleapis.com!)
 function httpcompression() {
@@ -141,6 +193,66 @@ function unidecode() {
 }
 
 
+# Decode \x{ABCD}-style Unicode escape sequences
+function unidecode() {
+        perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
+        # print a newline unless we’re piping the output to another program
+        if [ -t 1 ]; then
+                echo ""; # newline
+        fi;
+}
+
+# Get a character’s Unicode code point
+function codepoint() {
+        perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
+        # print a newline unless we’re piping the output to another program
+        if [ -t 1 ]; then
+                echo ""; # newline
+        fi;
+}
+
+# Show all the names (CNs and SANs) listed in the SSL certificate
+# for a given domain
+function getcertnames() {
+        if [ -z "${1}" ]; then
+                echo "ERROR: No domain specified.";
+                return 1;
+        fi;
+
+        local domain="${1}";
+        echo "Testing ${domain}…";
+        echo ""; # newline
+
+        local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
+                | openssl s_client -connect "${domain}:443" -servername "${domain}" 2>&1);
+
+        if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+                local certText=$(echo "${tmp}" \
+                        | openssl x509 -text -certopt "no_aux, no_header, no_issuer, no_pubkey, \
+                        no_serial, no_sigdump, no_signame, no_validity, no_version");
+                echo "Common Name:";
+                echo ""; # newline
+                echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//" | sed -e "s/\/emailAddress=.*//";
+                echo ""; # newline
+                echo "Subject Alternative Name(s):";
+                echo ""; # newline
+                echo "${certText}" | grep -A 1 "Subject Alternative Name:" \
+                        | sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2;
+                return 0;
+        else
+                echo "ERROR: Certificate not found.";
+                return 1;
+        fi;
+}
+
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+        tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
 
 # Launch installed browsers for a specific URL
 # Usage: browsers "http://www.google.com"
@@ -149,84 +261,6 @@ function browsers(){
 	opera $1
 	firefox $1
 	safari $1
-}
-
-# Browserstack shortcuts, now with added hotness thanks to the Browserstack team.
-# Note, a trial or paid for account is needed for this to work
-# Usage: ipad3 "http://www.google.com", win7ie8 "http://www.google.com" etc.
-
-# For local server running on port 3000, use like this
-# Usage: ipad3 "http://localhost:3000" "localhost,3000,0", win7ie8 "http://localhost:3000" "localhost,3000,0" etc.
-
-# For local server running on apache with ssl as staging.example.com and https://staging.example.com
-# Usage: ipad3 "http://staging.example.com" "staging.example.com,80,0,staging.example.com,443,1", win7ie8 "http://staging.example.com" "staging.example.com,80,0,staging.example.com,443,1" etc.
-
-function openurl(){
-	if [ $2 ]
-	then
-	  url=$1"&host_ports=$2"
-	fi
-	open -a google\ chrome ${url}
-}
-
-function androidnexus(){
-	local url="http://www.browserstack.com/start#os=android&os_version=4.0.3&device=Samsung+Galaxy+Nexus&zoom_to_fit=true&url=$1&start=true"
-	openurl $url $2
-}
-
-function ipad3(){
-	local url="http://www.browserstack.com/start#os=ios&os_version=5.1&device=iPad+3rd&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function ipad3ios6(){
-	local url="http://www.browserstack.com/start#os=ios&os_version=6.1&device=iPad+3rd&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function ipad2(){
-	local url="http://www.browserstack.com/start#os=ios&os_version=5.1&device=iPad+2nd&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function win7ie8(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=7&browser=IE&browser_version=8.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function win7ie9(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=7&browser=IE&browser_version=9.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function win8ie10(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=8&browser=IE&browser_version=10.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function winxpie8(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=XP&browser=IE&browser_version=8.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function winxpie7(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=XP&browser=IE&browser_version=7.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function winxpie6(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=XP&browser=IE&browser_version=6.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function win7chrome(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=7&browser=Chrome&browser_version=21.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
-}
-
-function win7ff(){
-	local url="http://www.browserstack.com/start#os=Windows&os_version=7&browser=Firefox&browser_version=16.0&zoom_to_fit=true&resolution=1024x768&speed=1&url=$1&start=true"
-	openurl $url $2
 }
 
 # test internet connection speed

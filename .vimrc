@@ -11,17 +11,30 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-surround'           "Surround things with tags like brackets
 Plugin 'vim-scripts/HTML-AutoCloseTag'
-Plugin 'vim-scripts/AutoClose'        "auto-close brackets
+"Plugin 'vim-scripts/AutoClose'        "auto-close brackets
+Plugin 'slava/vim-spacebars'
 Plugin 'scrooloose/nerdtree'          "File Navigation
 Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'               "Fuzzy Navigation, thank God
 Plugin 'scrooloose/syntastic'         "Linting
 Plugin 'vim-scripts/vcscommand.vim'   "Git diff
 Plugin 'fholgado/minibufexpl.vim'     "Buffer Explorer
-Plugin 'epeli/slimux'                 "Tmux support
-Plugin 'christoomey/vim-tmux-navigator' "Use same vim/tmux pane hotkeys
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-airline/vim-airline'      "powerline replacement
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-jdaddy'             "JSON object formating
+Plugin 'airblade/vim-gitgutter'
+"Plugin 'Shougo/vimshell'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'marijnh/tern_for_vim'
+"Plugin 'Shougo/vimproc.vim'
+"Plugin 'ternjs/tern_for_vim'
+Plugin 'jlanzarotta/bufexplorer'
+"Plugin 'easymotion/vim-easymotion'
 "Plugin 'mxw/vim-jsx'                 "JSX highlighting
 "Bundle 'rstacruz/sparkup'            "Fast html generation
+"Plugin 'epeli/slimux'                 "Tmux support
+"Plugin 'christoomey/vim-tmux-navigator' "Use same vim/tmux pane hotkeys
 
 "Clojure
 Plugin 'guns/vim-clojure-static', { 'for': 'clojure' }      "Clojure
@@ -253,3 +266,6 @@ set statusline+=%*
 ""let g:syntastic_check_on_open = 1
 ""let g:syntastic_check_on_wq = 0
 let g:jsx_ext_required = 0 "Allow JSX in normal JS files
+let g:airline#extensions#tabline#enabled = 1
+let g:mustache_abbreviations = 1
+"let g:tern_show_argument_hints = 'on_move'
